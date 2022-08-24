@@ -1,14 +1,13 @@
-import Airtable from "airtable";
+// import Airtable from "airtable";
 import fastify from "fastify";
 
+import { initializeAirTable } from "../src/infrastructure/initializeAirTable";
 import { Pokemon } from "../src/domain/pokemon";
 
 const server = fastify({ logger: true });
 
 server.get("/", async (request, reply) => {
-  // Initialize Airtable
-  Airtable.configure({ apiKey: process.env.AIRTABLE_API_KEY });
-  const base = Airtable.base("appIAtTzzEM5Yf1Mp");
+  const base = initializeAirTable();
 
   const records = await base("tblNS9Q7cLZNW730b")
     .select({ view: "Grid view" })
