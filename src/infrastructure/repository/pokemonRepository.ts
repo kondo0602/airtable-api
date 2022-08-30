@@ -7,7 +7,7 @@ export class PokemonRepository implements IPokemonRepository {
   public constructor(private readonly base: AirtableBase) {}
 
   public findAll = async (): Promise<Pokemon[]> => {
-    const records = await this.base("tblNS9Q7cLZNW730b")
+    const records = await this.base(process.env.AIRTABLE_TABLE_ID as string)
       .select({ view: "Grid view" })
       .all();
 
@@ -26,7 +26,7 @@ export class PokemonRepository implements IPokemonRepository {
   public save = async (pokemon: Pokemon): Promise<Pokemon> => {
     const props = pokemon.getAllPropertiesInRepository();
 
-    await this.base("tblNS9Q7cLZNW730b").create([
+    await this.base(process.env.AIRTABLE_TABLE_ID as string).create([
       {
         fields: {
           Id: props.id,
