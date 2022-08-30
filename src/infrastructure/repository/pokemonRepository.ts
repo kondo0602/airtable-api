@@ -6,7 +6,7 @@ import { IPokemonRepository } from "../../usecase/repositoryInterface/IPokemonRe
 export class PokemonRepository implements IPokemonRepository {
   public constructor(private readonly base: AirtableBase) {}
 
-  public findAll = async () => {
+  public findAll = async (): Promise<Pokemon[]> => {
     const records = await this.base("tblNS9Q7cLZNW730b")
       .select({ view: "Grid view" })
       .all();
@@ -23,7 +23,20 @@ export class PokemonRepository implements IPokemonRepository {
     return pokemons;
   };
 
-  public save = async () => {
-    return null;
+  public save = async (pokemon: Pokemon): Promise<Pokemon> => {
+    const props = pokemon.getAllPropertiesInRepository();
+
+    await this.base("tblNS9Q7cLZNW730b").create([
+      {
+        fields: {
+          Id: props.id,
+          Name: props.name,
+          Type1: props.type1,
+          Type2: props.type2,
+        },
+      },
+    ]);
+
+    return pokemon;
   };
 }

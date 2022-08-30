@@ -1,6 +1,6 @@
 import { IPokemonRepository } from "./repositoryInterface/IPokemonRepository";
 
-export class getAllPokemonsUsecase {
+export class GetAllPokemonsUsecase {
   public constructor(private readonly pokemonRepo: IPokemonRepository) {}
 
   public do = async () => {
