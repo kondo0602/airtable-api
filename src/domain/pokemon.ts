@@ -2,14 +2,14 @@ type PokemonProps = {
   id: string;
   name: string;
   type1: string;
-  type2: string;
+  type2?: string;
 };
 
 export class Pokemon {
   private readonly id: string;
   private readonly name: string;
   private readonly type1: string;
-  private readonly type2: string;
+  private readonly type2?: string;
 
   private constructor(props: PokemonProps) {
     this.id = props.id;
@@ -44,5 +44,14 @@ export class Pokemon {
 
   public static reconstruct(props: PokemonProps) {
     return new Pokemon(props);
+  }
+
+  public getAllPropertiesInRepository() {
+    return {
+      id: this.id,
+      name: this.name,
+      type1: this.type1,
+      type2: this.type2,
+    };
   }
 }
